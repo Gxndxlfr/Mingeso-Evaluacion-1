@@ -1,7 +1,7 @@
-package edu.mtisw.testingwebapp.services;
+package com.example.evaluacion1.services;
 
-import edu.mtisw.testingwebapp.entities.EmpleadoEntity;
-import edu.mtisw.testingwebapp.repositories.EmpleadoRepository;
+import com.example.evaluacion1.entities.EmpleadoEntity;
+import com.example.evaluacion1.repositories.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
