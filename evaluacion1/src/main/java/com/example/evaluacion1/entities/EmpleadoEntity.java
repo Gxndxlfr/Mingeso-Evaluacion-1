@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "empleados")
@@ -19,8 +20,10 @@ public class EmpleadoEntity {
     private Long id;
 
     private String rut;
+    private String apellidoM;
+    private String apellidoP;
     private String nombre;
-    private double sueldoMensual;
-    private int numeroHijos;
+    private Date FechaN;
     private String categoria;
+    private Date FechaI;
 }
