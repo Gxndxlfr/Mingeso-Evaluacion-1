@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "MarcasReloj")
+@Table(name = "marcas_reloj")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,5 +32,14 @@ public class MarcasRelojEntity {
         }
         this.hora = newHora;
         this.rut=newRut;
+    }
+
+    public void setFecha(String newFecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            this.fecha = formato.parse(newFecha);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
