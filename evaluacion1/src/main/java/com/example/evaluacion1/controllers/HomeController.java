@@ -1,6 +1,10 @@
 package com.example.evaluacion1.controllers;
 
 import com.example.evaluacion1.entities.MarcasRelojEntity;
+import com.example.evaluacion1.entities.EmpleadoEntity;
+import com.example.evaluacion1.entities.JustificativoEntity;
+import com.example.evaluacion1.services.EmpleadoService;
+import com.example.evaluacion1.services.JustificativosService;
 import com.example.evaluacion1.services.MarcasRelojService;
 import com.example.evaluacion1.services.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,50 @@ public class HomeController {
             marcasRelojService.guardarMarcasReloj(m);
         }
         ms.addFlashAttribute("mensaje", "Archivo guardado correctamente!!");
+        return "home";
+    }
+
+    @Autowired
+    private JustificativosService justificativosService;
+
+    @Autowired
+    private EmpleadoService empleadoService;
+    @PostMapping("/cargarJustf")
+    public String cargaJustificativo(@RequestParam("rut") String rut, @RequestParam("justf") MultipartFile file, RedirectAttributes ms){
+
+        //obtener empleados
+        System.out.println("try get all empleados");
+        ArrayList<EmpleadoEntity>empleados=empleadoService.obtenerEmpleados();
+
+
+
+        //verificar rut
+        Integer validate_rut = 0;
+        System.out.println("search empleado");
+        for (EmpleadoEntity e:empleados){
+            System.out.println(e.getRut());
+            if (e.getRut().equals(rut)){
+                System.out.println("empleado encontrado");
+                validate_rut = 1;
+            }
+        }
+        if (validate_rut == 1){
+            System.out.println("existe el empleado");
+            //contenido archivo
+            String contenido = upload.leer_justf(file);
+            //crear entidad
+            JustificativoEntity justf = upload.crearJustf(rut, contenido);
+
+            //guardar entidad
+            justificativosService.guardarJustificativo(justf);
+            ms.addFlashAttribute("mensaje", "Justificativo guardado correctamente!!");
+
+        }
+        else{
+            System.out.println(" NO existe el empleado");
+            ms.addFlashAttribute("mensaje", "Empleado no existe");
+
+        }
         return "home";
     }
 

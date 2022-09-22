@@ -1,14 +1,11 @@
 package com.example.evaluacion1.services;
 
+import com.example.evaluacion1.entities.JustificativoEntity;
 import com.example.evaluacion1.entities.MarcasRelojEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.beans.factory.annotation.Autowired;
-
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -64,5 +61,27 @@ public class UploadService {
             marcas.add(marca);
         }
         return marcas;
+    }
+
+
+    public String leer_justf(MultipartFile file) {
+        System.out.println("try read justf");
+        String contenido = null;
+        try {
+            contenido = new String(file.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException("Error al leer justf");
+        }
+        System.out.println("contenido justf");
+        System.out.println(contenido);
+        return contenido;
+    }
+
+
+    public JustificativoEntity crearJustf(String rut, String contenido) {
+        JustificativoEntity newJustf = new JustificativoEntity();
+        newJustf.setRut(rut);
+        newJustf.setContenido(contenido);
+        return newJustf;
     }
 }

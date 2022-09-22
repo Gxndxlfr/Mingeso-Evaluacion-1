@@ -23,5 +23,15 @@
 
   <h3 th:text="${mensaje}"></h3>
 </div>
+<h1>Subir Justificativo</h1>
+<div class="container">
+  <form action="/cargarJustf" method="post" enctype="multipart/form-data">
+    <label>Rut empleado</label><br>
+    <input type="text" id="fname" name="rut"><br>
+    <label>Justificativo</label><br>
+    <input type="file" class="form-control" name="justf"><br>
+    <input type="submit" value="Subir justificativo"><br>
+  </form>
+</div>
 </body>
 </html>
