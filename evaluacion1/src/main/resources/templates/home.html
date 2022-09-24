@@ -32,6 +32,18 @@
     <input type="file" class="form-control" name="justf"><br>
     <input type="submit" value="Subir justificativo"><br>
   </form>
+  <h3 th:text="${mensaje_2}"></h3>
+</div>
+<h1>Subir Autorización horas extra</h1>
+<div class="container">
+  <form  action="/cargarAut" method="post" enctype="multipart/form-data">
+    <label>Rut empleado</label><br>
+    <input type="text" id="rutA" name="rutA"><br>
+    <label>Autorización horas extra</label><br>
+    <input type="file" class="form-control" name="Aut"><br>
+    <input type="submit" value="Subir autorización horas extra"><br>
+  </form>
+  <h3 th:text="${mensaje_3}"></h3>
 </div>
 </body>
 </html>
