@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -19,27 +17,9 @@ public class MarcasRelojEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private Date fecha;
-    private String hora;
+    private Date fechaH;
+    private String fecha;
     private String rut;
 
-    public void MarcaRelojConstructor(String newFecha, String newHora, String newRut){
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            this.fecha = formato.parse(newFecha);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        this.hora = newHora;
-        this.rut=newRut;
-    }
 
-    public void setFecha(String newFecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            this.fecha = formato.parse(newFecha);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
