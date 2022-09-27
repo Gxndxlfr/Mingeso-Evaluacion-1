@@ -5,13 +5,14 @@ import com.example.evaluacion1.repositories.MarcasRelojRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class MarcasRelojService {
+
 
     public String[] separarPorLineas(String contenido){
         String[] newCont = contenido.split("\n");
@@ -47,6 +48,7 @@ public class MarcasRelojService {
 
         //transformar string a fecha
         Date fecha = StringtoDate(datos[0],datos[1]);
+
         //set fecha
         newMarca.setFechaH(fecha);
         newMarca.setFecha(datos[0]);
@@ -71,7 +73,25 @@ public class MarcasRelojService {
     @Autowired
     MarcasRelojRepository marcasRelojRepository;
 
+    public ArrayList<MarcasRelojEntity> obtenerMarcasReloj(){
+        return (ArrayList<MarcasRelojEntity>) marcasRelojRepository.findAll();
+    }
     public MarcasRelojEntity guardarMarcasReloj(MarcasRelojEntity marca){
         return marcasRelojRepository.save(marca);
+    }
+
+    public ArrayList<Integer> crearMarcasRevisadas(int size) {
+        ArrayList<Integer> marcasRevisadas = new ArrayList<>();
+        for (int i = 0; i<size; i++){
+            marcasRevisadas.add(0);
+        }
+        return marcasRevisadas;
+    }
+
+    public MarcasRelojEntity obtenerFechaComplementaria(MarcasRelojEntity m) {
+        long id = m.getId();
+        String fecha = m.getFecha();
+        String rut = m.getRut();
+        return marcasRelojRepository.obtenerParejaMarcaReloj(id,fecha,rut);
     }
 }
