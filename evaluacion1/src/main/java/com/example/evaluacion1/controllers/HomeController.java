@@ -1,9 +1,6 @@
 package com.example.evaluacion1.controllers;
 
-import com.example.evaluacion1.entities.AutorizacionEntity;
-import com.example.evaluacion1.entities.EmpleadoEntity;
-import com.example.evaluacion1.entities.JustificativoEntity;
-import com.example.evaluacion1.entities.MarcasRelojEntity;
+import com.example.evaluacion1.entities.*;
 import com.example.evaluacion1.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +30,9 @@ public class HomeController {
 
     @Autowired
     private InasistenciaService inasisteniaService;
+
+    @Autowired
+    private AsistenciaService asistenciaService;
     @GetMapping("/")
     public String home() {
         return "home";
@@ -59,16 +59,12 @@ public class HomeController {
         ArrayList<Integer> marcasRevisadas = marcasRelojService.crearMarcasRevisadas(marcasReloj.size());
 
         for(MarcasRelojEntity m:marcasReloj){
-                if(marcasRevisadas.get(Math.toIntExact(m.getId() - 1)).equals(0)){
+                if(marcasRevisadas.get(Math.toIntExact(m.getId())-1).equals(0)){
 
                     System.out.println("Marcas revisadas");
                     System.out.println(marcasRevisadas);
 
-                    System.out.println("---------Fecha 1-----");
-                    System.out.println(m.getId());
-                    System.out.println(m.getFechaH().getYear()+1900);//año menos 1900
-                    System.out.println(m.getFechaH().getMonth()+1);
-                    System.out.println( m.getFechaH().getDate());
+
 
 
 
@@ -76,38 +72,61 @@ public class HomeController {
                     //revisar quien faltó el día anterior y dejar registro
                     if(m.getFechaH().getDate() != diaRevisado){
                         System.out.println("cambio de día");
-                        //inasisteniaService.marcarInasistencias(marcasPorDia,empleados);
+                        //inasistenicaService.marcarInasistencias(marcasPorDia,empleados);
 
                         marcasPorDia.clear();
                         diaRevisado = m.getFechaH().getDate();
                         fechaStr = m.getFecha();
                     }
-
+                    System.out.println("a");
                     //Asignar Fecha
                     int idMarcaReloj = Math.toIntExact(m.getId());
                     //fecha no revisada
-                    if (marcasRevisadas.get(idMarcaReloj-1).equals(0)){
-
+                    if (marcasRevisadas.get(idMarcaReloj-1) == 0){
+                        System.out.println("b");
                         MarcasRelojEntity marca_2 = new MarcasRelojEntity();
                         for (MarcasRelojEntity mr:marcasReloj){
                             if(m.getFecha().equals(mr.getFecha())){
+                                System.out.println("c");
                                 if(m.getRut().equals(mr.getRut())){
-                                    if(!(m.getId().equals(mr.getId()))){
-                                        System.out.println("---------Fecha 2-----");
+                                    System.out.println("d");
+                                    Date fecha1 = m.getFechaH();
+                                    Date fecha2 = mr.getFechaH();
+
+
+                                    System.out.println("---------Fecha 1-----");
+                                    System.out.println(m.getId());
+                                    System.out.println(m.getFechaH().getYear()+1900);//año menos 1900
+                                    System.out.println(m.getFechaH().getMonth()+1);
+                                    System.out.println( m.getFechaH().getDate());
+
+
+
+
+
+                                    if (!(fecha2.equals(fecha1))){
+
+                                        System.out.println("Aqui si");
+                                        System.out.println(m.getId());
+                                        System.out.println(mr.getId());
+
+                                        System.out.println("---------Fecha 2 confirmada-----");
                                         System.out.println(mr.getId());
                                         System.out.println(mr.getFechaH().getYear()+1900);//año menos 1900
                                         System.out.println(mr.getFechaH().getMonth()+1);
                                         System.out.println( mr.getFechaH().getDate());
 
                                         //Calcular info para planilla con nueva entidad asistencia
-
+                                        AsistenciaEntity as = asistenciaService.crearAsistencia(m,mr);
+                                        asistenciaService.guardarAsistencia(as);
                                         //marcar como revisada fecha 1 y 2
                                         int idMarcaReloj_2 = Math.toIntExact(mr.getId());
                                         marcasRevisadas.set(idMarcaReloj_2-1,1);
                                         marcasRevisadas.set(idMarcaReloj-1,1);
                                         marcasPorDia.add(m);
-                                        break;
                                     }
+
+
                                 }
                             }
                         }
