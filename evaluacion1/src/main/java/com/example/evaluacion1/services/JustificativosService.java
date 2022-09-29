@@ -15,12 +15,17 @@ public class JustificativosService {
     public ArrayList<JustificativoEntity> obtenerJustificativos(){
         return (ArrayList<JustificativoEntity>) justificativoRepository.findAll();
     }
-    public JustificativoEntity crearJustf(String rut, String contenido) {
+    public JustificativoEntity crearJustf(String rut,String fecha, String contenido) {
         JustificativoEntity newJustf = new JustificativoEntity();
         newJustf.setRut(rut);
+        newJustf.setFecha(fecha);
         newJustf.setContenido(contenido);
         return newJustf;
     }
 
     public JustificativoEntity guardarJustificativo(JustificativoEntity justf) {return justificativoRepository.save(justf);}
+
+    public JustificativoEntity obtenerJustificativoPorRutYFecha(String rut, String fecha) {
+        return justificativoRepository.getbyRutAndFecha(rut,fecha);
+    }
 }

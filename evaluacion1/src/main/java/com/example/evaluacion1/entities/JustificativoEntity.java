@@ -19,5 +19,7 @@ public class JustificativoEntity {
     private Long id;
 
     private String rut;
+    private String fecha;
     private String contenido;
+
 }

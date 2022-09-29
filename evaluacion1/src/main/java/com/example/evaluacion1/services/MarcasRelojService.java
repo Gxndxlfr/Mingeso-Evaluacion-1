@@ -15,7 +15,7 @@ public class MarcasRelojService {
 
 
     public String[] separarPorLineas(String contenido){
-        String[] newCont = contenido.split("\n");
+        String[] newCont = contenido.split("\\R");
 
         return newCont;
     }

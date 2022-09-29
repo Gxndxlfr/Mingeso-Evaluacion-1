@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Service
@@ -25,7 +26,7 @@ public class AsistenciaService {
         newAs.setSalida(mr.getFechaH());
         newAs.setFecha(m.getFecha());
 
-        long diff = m.getFechaH().getTime()-mr.getFechaH().getTime();
+        long diff = mr.getFechaH().getTime() - m.getFechaH().getTime();
         var horas = diff/(1000*60*60);
         System.out.println(horas);
         newAs.setHoras(Math.toIntExact(horas));
@@ -38,7 +39,7 @@ public class AsistenciaService {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        diff = m.getFechaH().getTime() - fechaBase.getTime();
+        diff = m.getFechaH().getTime() -fechaBase.getTime()  ;
 
         var atraso = diff/(1000*60);
         System.out.println(atraso);
@@ -49,4 +50,10 @@ public class AsistenciaService {
 
     public AsistenciaEntity guardarAsistencia(AsistenciaEntity as) { return asistenciaRepository.save(as);
     }
+
+    public ArrayList<AsistenciaEntity> obtenerAsistencias() {
+        return (ArrayList<AsistenciaEntity>) asistenciaRepository.findAll();
+    }
+
+
 }
