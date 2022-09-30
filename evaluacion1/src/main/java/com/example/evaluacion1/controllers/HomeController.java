@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,7 +43,7 @@ public class HomeController {
         return "home";
     }
     @GetMapping("/mostrarPlanilla")
-    public String mostrarPlanilla() throws ParseException {
+    public String mostrarPlanilla(Model model)  {
 
         //- getALL (marcasReloj, empleados, justificativos, confirmación horas extra)
         ArrayList<MarcasRelojEntity> marcasReloj =marcasRelojService.obtenerMarcasReloj();
@@ -145,12 +146,20 @@ public class HomeController {
 
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         //existen todas las asistencias
-        ArrayList<PlanillaEntity> planillas = planillaService.calcularSueldos();
+        ArrayList<PlanillaEntity> planillas = null;
+        try {
+            planillas = planillaService.calcularSueldos();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         for(PlanillaEntity p:planillas){
             planillaService.guardarPlanilla(p);
         }
-        return "other";
+
+
+        model.addAttribute("planillas",planillas);
+        return "planilla";
     }
 
     @PostMapping("/cargar")

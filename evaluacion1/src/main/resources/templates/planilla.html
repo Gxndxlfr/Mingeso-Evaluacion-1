@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Planilla sueldos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-sm">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Rut</th>
+            <th>Nombre empleado</th>
+            <th>Categoría</th>
+            <th>Años de servicio empresa</th>
+            <th>Sueldo fijo mensual</th>
+            <th>Monto Bonificación años servicio</th>
+            <th>Monto Pago Horas extras</th>
+            <th>Monto Descuentos</th>
+            <th>Sueldo Bruto</th>
+            <th>Cotización Previsional</th>
+            <th>Cotización Salud</th>
+            <th>Monto sueldo final</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="planillas:${planillas}">
+            <td th:text="${planillas.rut}"></td>
+            <td th:text="${planillas.nombre}"></td>
+            <td th:text="${planillas.categoria}"></td>
+            <td th:text="${planillas.yearsService}"></td>
+            <td th:text="${planillas.SueldoFijo}"></td>
+            <td th:text="${planillas.bonificacionYears}"></td>
+            <td th:text="${planillas.pagoHorasExtra}"></td>
+            <td th:text="${planillas.descuento}"></td>
+            <td th:text="${planillas.sueldoBruto}"></td>
+            <td th:text="${planillas.cotizacionProvicional}"></td>
+            <td th:text="${planillas.cotizacionSalud}"></td>
+            <td th:text="${planillas.sueldoFinal}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
